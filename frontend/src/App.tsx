@@ -3,7 +3,8 @@ import { auth, db } from "./firebase";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
-  signInWithPopup,
+  //signInWithPopup,
+  signInWithRedirect, //ﾎﾟｯﾌﾟｱｯﾌﾟブロック対策
   signOut,
 } from "firebase/auth";
 import {
@@ -19,8 +20,12 @@ export default function App() {
 
   useEffect(() => onAuthStateChanged(auth, setUser), []);
 
-  async function login() {
-    await signInWithPopup(auth, new GoogleAuthProvider());
+  // async function login() {
+  //   await signInWithPopup(auth, new GoogleAuthProvider());
+  // }
+  async function login() { //ﾎﾟｯﾌﾟｱｯﾌﾟがブロック対策のためにこっちに変更
+  const provider = new GoogleAuthProvider();
+  await signInWithRedirect(auth, provider);
   }
 
   async function logout() {
